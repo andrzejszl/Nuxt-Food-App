@@ -1,5 +1,10 @@
 # nuxtfoodapp
 
+## Live deployed App
+```
+https://tranquil-sorbet-42450e.netlify.app/
+```
+
 ## Build Setup
 
 ```bash
