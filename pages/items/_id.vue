@@ -13,7 +13,7 @@
                 <h3>Price: ${{ currentItem.price }}</h3>
                 <input type="number" name="count" id="count" v-model="count" min="1">
                 <label for="count"></label>
-                <button>Add to Cart - ${{ itemsPrice }}</button>
+                <button @click="addToCart">Add to Cart - ${{ itemsPrice }}</button>
             </div>
             <div v-if="currentItem.options" class="options--options">
                 <fieldset>
@@ -33,14 +33,19 @@
                     </div>
                 </fieldset>
             </div>
+            <AppToast v-if="cartSubmitted">Order submitted!<br>Check out more <nuxt-link to="/restaurants">restaurants!</nuxt-link></AppToast>
         </section>
     </main>
 </template>
 
 <script>
 import { mapState } from 'vuex';
+import AppToast from '@/components/AppToast.vue';
 
     export default {
+        components: {
+            AppToast
+        },
         data() {
             return {
                 id: this.$route.params.id,
@@ -48,6 +53,7 @@ import { mapState } from 'vuex';
                 itemOptions: '',
                 itemAddons: [],
                 itemSizeAndCost: [],
+                cartSubmitted: false,
             }
         },
         computed: {
@@ -72,6 +78,18 @@ import { mapState } from 'vuex';
             return (this.count * this.currentItem.price).toFixed(2)
         }
     },
+    methods: {
+        addToCart() {
+            let formOutput = {
+                item: this.currentItem,
+                count: this.count,
+                options: this.itemOptions,
+                addons: this.itemAddons,
+                combinedPrice: this.itemsPrice
+            }
+            this.cartSubmitted = true
+        }
+    }
     }
 </script>
 
@@ -87,9 +105,17 @@ import { mapState } from 'vuex';
         margin: 0 50px 50px 0;
     }
     .options {
+        position: relative;
         grid-column-start: 2;
         grid-row-start: 1;
         width: 400px;
+        .toast {
+            position: absolute;
+            bottom: 110%;
+            top: auto;
+            left: 0;
+            right: auto;
+        }
         .order {
             h2 {
                 font-size: 2rem;
