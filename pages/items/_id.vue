@@ -81,7 +81,7 @@ import AppToast from '@/components/AppToast.vue';
     methods: {
         addToCart() {
             let formOutput = {
-                item: this.currentItem,
+                item: this.currentItem.item,
                 count: this.count,
                 options: this.itemOptions,
                 addons: this.itemAddons,
