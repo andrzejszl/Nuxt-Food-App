@@ -88,6 +88,7 @@ import AppToast from '@/components/AppToast.vue';
                 combinedPrice: this.itemsPrice
             }
             this.cartSubmitted = true
+            this.$store.commit('addToCart', formOutput)
         }
     }
     }
